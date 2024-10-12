@@ -1,0 +1,43 @@
+<h1>Funny Movies</h1>
+<div class="head">
+
+  <%= link_to 'Share a new video', new_video_path %>
+
+    <div class="outbutton"> 
+    <% if user_signed_in? %>
+    <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+    <% else %>
+    <%= link_to 'Login', new_user_session_path %>
+    <% end %>
+      <button id="toggle-theme">
+        <i class="fas fa-sun"></i>
+      </button>
+    </div>
+</div>
+
+<ul class="video-grid">
+  <% @videos.each do |video| %>
+    <li class="video-item">
+      <h3>
+        <%= video.title %>
+         <% if video.user %>
+          <span class="video-uploader">by <%= video.user.email %></span>
+        <% end %>
+      </h3>
+
+      <% video_id = if video.url.include?('watch?v=') 
+                      video.url.split('watch?v=').last.split('&').first 
+                    elsif video.url.include?('youtu.be/') 
+                      video.url.split('youtu.be/').last.split('&').first 
+                    end %>
+
+      <% video_url = "https://www.youtube.com/embed/#{video_id}" %>
+
+      <iframe 
+        src="<%= sanitize(video_url) %>" 
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+        allowfullscreen>
+      </iframe>
+    </li>
+  <% end %>
+</ul>

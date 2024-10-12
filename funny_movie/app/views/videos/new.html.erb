@@ -1,0 +1,14 @@
+<h1>Share a New Video</h1>
+<%= form_with model: @video, local: true do |form| %>
+  <div>
+    <%= form.label :title %>
+    <%= form.text_field :title %>
+  </div>
+  <div>
+    <%= form.label :url %>
+    <%= form.text_field :url %>
+  </div>
+  <div>
+    <%= form.submit 'Share' %>
+  </div>
+<% end %>
